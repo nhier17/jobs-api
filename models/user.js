@@ -39,5 +39,11 @@ return JWT.sign({userId: this._id, name: this.name}, process.env.JWT_SECRET, {
 })
 }
 
+//compare hashed password for successful login
+userSchema.methods.comparePassword = async function (userPassword) {
+const isMatch = await bcrypt.compare(userPassword, this.password)
+return isMatch
+}
+
 
 module.exports = mongoose.model('User', userSchema)
